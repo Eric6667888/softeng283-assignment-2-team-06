@@ -1,0 +1,82 @@
+[
+  {
+    "US_ID": "US1",
+    "US_text": "As a Manny’s food service customer, I want to see different food item types displayed in different colors—RGB = #FF0000 for meats, #A52AFA for grains, and #808000 for vegetables and fruits, so that I can quickly identify my food items by food type."
+  },
+  {
+    "US_ID": "US2",
+    "US_text": "As a reader, I want to bookmark pages, so that I can quickly find relevant content in the future."
+  },
+  {
+    "US_ID": "US3",
+    "US_text": "As a Manny’s food service customer, I want to save my list, so that later I can save a copy, print, or email the list for other uses."
+  },
+  {
+    "US_ID": "US4",
+    "US_text": "As a blogger who codes, I want the blogging system to integrate with GitHub, so that readers can see my GitHub activity in my profile."
+  },
+  {
+    "US_ID": "US5",
+    "US_text": "As a Manny’s food service customer, I want to save, copy, print, and email my list, so that I can edit it again, check a received shipment against a printed list, and send the list to a restaurant."
+  },
+  {
+    "US_ID": "US6",
+    "US_text": "As a tester, I want to have detailed test plans so that when the system is completed, I can test the system."
+  },
+  {
+    "US_ID": "US7",
+    "US_text": "As a business user, I want a report of item profitability, so that I can identify and highlight profitable items and consider what to do about underperforming items."
+  },
+  {
+    "US_ID": "US8",
+    "US_text": "As the system, I want to store customer account info and their order lists in the database."
+  },
+  {
+    "US_ID": "US9",
+    "US_text": "As a customer ordering food, I want to locate previous food order lists, so that I can see all the lists that I have."
+  },
+  {
+    "US_ID": "US10",
+    "US_text": "As a Manny’s food service customer, I want my custom item code to stand out, so that I can find it on the screen more quickly."
+  },
+  {
+    "US_ID": "US11",
+    "US_text": "As a blogger who codes, I want my GitHub activity to be displayed in my profile, so that readers can see that I'm a prolific coder and read my posts."
+  },
+  {
+    "US_ID": "US12",
+    "US_text": "As a Manny’s food service customer, I want to save my list, so that I can reorder from the list to create more accurate food orders."
+  },
+  {
+    "US_ID": "US13",
+    "US_text": "As a customer ordering food, I want to see my saved food order lists, so that I can reuse the list for future orders, making ordering faster and more accurate."
+  },
+  {
+    "US_ID": "US14",
+    "US_text": "As a user, I want a dropdown with autocomplete and API-based search, So that I can find products quickly."
+  },
+  {
+    "US_ID": "US15",
+    "US_text": "As a user, I want a new reporting system, so that I can see all company data."
+  },
+  {
+    "US_ID": "US16",
+    "US_text": "As a developer, I want to finalize the database table changes and additions for the release, so that we don’t have to make changes to the model later."
+  },
+  {
+    "US_ID": "US17",
+    "US_text": "As a business user, I would like a report of item profitability, so that I can identify and highlight profitable items and address underperforming items."
+  },
+  {
+    "US_ID": "US18",
+    "US_text": "As a Google Keep user, I want to have my shopping lists in black and my daily notes in blue, So that they are easily differentiable."
+  },
+  {
+    "US_ID": "US19",
+    "US_text": "As a customer, I want to withdraw cash from an ATM, So that I don't have to wait in line at the bank."
+  },
+  {
+    "US_ID": "US20",
+    "US_text": "As a project manager, I want to be able to share projects to other users, so that we can work collaboratively."
+  }
+]

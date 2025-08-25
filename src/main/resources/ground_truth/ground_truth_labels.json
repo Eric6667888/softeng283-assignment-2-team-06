@@ -1,0 +1,82 @@
+[
+  {
+    "us_id": "us1",
+    "ground_truth_problem_id": 1
+  },
+  {
+    "us_id": "us2",
+    "ground_truth_problem_id": 1
+  },
+  {
+    "us_id": "us3",
+    "ground_truth_problem_id": 2
+  },
+  {
+    "us_id": "us4",
+    "ground_truth_problem_id": 2
+  },
+  {
+    "us_id": "us5",
+    "ground_truth_problem_id": 3
+  },
+  {
+    "us_id": "us6",
+    "ground_truth_problem_id": 4
+  },
+  {
+    "us_id": "us7",
+    "ground_truth_problem_id": 5
+  },
+  {
+    "us_id": "us8",
+    "ground_truth_problem_id": 5
+  },
+  {
+    "us_id": "us9",
+    "ground_truth_problem_id": 6
+  },
+  {
+    "us_id": "us10",
+    "ground_truth_problem_id": 0
+  },
+  {
+    "us_id": "us11",
+    "ground_truth_problem_id": 0
+  },
+  {
+    "us_id": "us12",
+    "ground_truth_problem_id": 0
+  },
+  {
+    "us_id": "us13",
+    "ground_truth_problem_id": 0
+  },
+  {
+    "us_id": "us14",
+    "ground_truth_problem_id": 1
+  },
+  {
+    "us_id": "us15",
+    "ground_truth_problem_id": 3
+  },
+  {
+    "us_id": "us16",
+    "ground_truth_problem_id": 4
+  },
+  {
+    "us_id": "us17",
+    "ground_truth_problem_id": 5
+  },
+  {
+    "us_id": "us18",
+    "ground_truth_problem_id": 1
+  },
+  {
+    "us_id": "us19",
+    "ground_truth_problem_id": 0
+  },
+  {
+    "us_id": "us20",
+    "ground_truth_problem_id": 0
+  }
+]
