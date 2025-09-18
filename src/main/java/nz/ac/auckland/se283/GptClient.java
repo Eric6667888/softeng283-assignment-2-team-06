@@ -25,7 +25,7 @@ public class GptClient {
     for (ChatMessage m : messages) {
       req.addMessage(m.getRole(), m.getContent());
     }
-    req.setModel(ChatCompletionRequest.Model.GPT_4_1_NANO);
+    req.setModel(ChatCompletionRequest.Model.GPT_4_1_MINI);
     req.setN(n);
     req.setTemperature(temperature);
     req.setTopP(topP);

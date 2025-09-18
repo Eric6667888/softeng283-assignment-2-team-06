@@ -19,5 +19,3 @@ Task overview: Your team will create a Java program that leverages an OpenAI GPT
 - Set A) A set of user stories with known problems, given in this brief (section 8).
 - Set B) Your team’s user stories, submitted in A1.
 - Set C) A new (unseen) set of user stories, revealed after the A2 submission.
-
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/6hwtYD0u)

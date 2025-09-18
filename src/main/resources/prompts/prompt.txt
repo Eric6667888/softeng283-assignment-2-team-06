@@ -1,1 +1,151 @@
-Enter your prompt here.
+CRITICAL CONDITION — OUTPUT FORMAT
+- You must output ONLY a valid JSON array. Start with '[' and end with ']'.
+- No Markdown, no code fences, no explanations, no extra text or whitespace before/after the array.
+- All strings must use double quotes and be valid JSON (escape internal quotes/newlines).
+- If the input array is empty, output [].
+- Return exactly one output object per input item.
+
+TASK
+Classify each user story by the MOST PROMINENT problem type (or 0 = No Problem), then rewrite the story to remove that problem. Apply rules to ANY domain; do not rely on dataset-specific words.
+
+INPUT CONTRACT
+- Input is an array of objects.
+- Each object MUST include "us_id" (number) and at least one of: "text", "story", "us_text".
+- Extract the first present text field in that order. Normalize whitespace; strip surrounding quotes/punctuation.
+
+PARSING RULES
+- Target pattern: "As a <persona>, I want <capability>, so that <value>."
+- Treat “so I can”, “in order to”, “so that I am able to” as value markers.
+- Missing value → candidate for 6 unless a higher class matches.
+- Missing persona → candidate for 5 unless 3 matches first.
+
+PROBLEM TAXONOMY (ID → label)
+0: No Problem
+1: Conflate Problems with Solutions — HOW (specific UI widget/control, visual/colour spec, third-party integration/brand, technical mechanism/format/protocol/placement) is encoded in the capability rather than the need.
+2: Misplaced Requirements — the value (“so that…”) contains steps/requirements/criteria/implementation details instead of an outcome.
+3: Ultra-huge story — multiple capabilities or massively broad scope crammed into one story.
+4: Technical User Story — technical persona or internal technical task without direct end-user value.
+5: Poorly defined user roles — vague role or non-user actor.
+6: Parakeet Value — value merely restates capability or gives trivial/no outcome (including missing value).
+
+PRECEDENCE
+3 > 5 > 4 > 1 > 2 > 6 > 0
+
+PARAKEET LAST-RESORT RULE
+- Assign 6 only after explicitly checking and rejecting 3, 5, 4, 1, and 2.
+- If any signals for 1, 2, or 3 are present, do NOT assign 6.
+
+STRICT ELIGIBILITY CHECKLIST FOR CLASS 0 (No Problem)
+All must be true:
+- Persona is specific and human (domain-qualified), not generic (“user”, “business user”, etc.) and not a system/thing.
+- Capability is atomic: ONE primary action (no coordinated verb lists).
+- Capability expresses WHAT, not HOW (no specific widgets, colours/codes, placements, formats/protocols, named third parties).
+- Value expresses a real outcome (e.g., faster, easier, reuse, compare, decide, plan, monitor, reduce errors, comply, secure, confident, save time/cost) — not steps/criteria/implementation.
+- Value does NOT substantially repeat the capability.
+- If a story meets all Class 0 checks, do NOT downgrade to 6 even if there is lexical overlap.
+
+DETECTION HEURISTICS
+
+(3) ULTRA-HUGE — MULTIPLE ACTIONS OR BROAD SCOPE
+- Capability lists ≥2 actions (commas / “and/or”), or enumerations.
+- Scope claims exhaustive coverage (“all/entire/everything/any”) with broad assets (data/content/reports/company information).
+- Choose 3 even if other issues exist.
+
+(5) POORLY DEFINED ROLES — VAGUE/NON-USER
+- Generic persona (“user”, “business user”, “stakeholder”, “employee”, “manager” without domain qualifier), or
+- Non-human actor: “the system/platform/database/application/service”.
+- Choose 5 (overrides 4).
+
+(4) TECHNICAL USER STORY — INTERNAL TECH WORK
+- Technical persona (developer/tester/QA/ops/sysadmin/SRE/DBA/architect), or
+- Capability is internal technical work (refactoring, deployment/config, test plans, data migration) with no direct end-user outcome.
+- Do NOT assign 4 for mere technical nouns; require a technical persona or an internal-tech capability with no user outcome.
+- If an end-user outcome is clearly stated, prefer 0 (if clean) or another non-zero class over 4.
+
+(1) CONFLATE — HOW IN CAPABILITY
+- Capability prescribes a specific mechanism (named UI components/metaphors; colour models/codes; fixed placements; file formats/protocols; named integrations/brands).
+- Treat “feature nouns” (bookmark, wizard, dropdown, autocomplete, API-based approach, color-coding) as HOW when they prescribe the mechanism rather than the need.
+- Choose 1 unless 3/5/4 already matched.
+
+(2) MISPLACED — HOW/ACs IN VALUE
+- Value contains steps/actions (save/copy/print/email/share/export/etc.), acceptance criteria, UI/tech specifics, formats, or integrations/brands.
+- If value has ≥2 operational verbs or an explicit list, classify as 2 unless 3 applies.
+- If both 1 and 2 seem plausible, location decides: HOW in capability → 1; HOW in value → 2.
+
+(6) PARAKEET — VALUE REPEATS OR IS TRIVIAL
+- Consider 6 only if:
+  (a) high content-word overlap after stop-word removal/lemmatization, AND
+  (b) value has NO outcome semantics (e.g., faster/easier/reuse/compare/decide/monitor/reduce errors/comply/secure/confident/save time/cost), AND
+  (c) 1, 2, 3 detectors are negative.
+- Missing value → 6 allowed unless higher class applies.
+- If any outcome semantics appear, do NOT assign 6 (prefer 0 if clean).
+
+TIE-BREAKERS
+- 1 vs 2: location of HOW (capability → 1, value → 2).
+- 3 beats 1 when multiple actions and HOW both appear.
+- 5 beats 4 when persona is both vague and technical.
+- If 6 is possible but 1/2/3 have signals, choose 1/2/3 per precedence.
+
+REWRITE RULES
+- Preserve domain nouns/intent; remove only the offending signals.
+- Format: “As a <specific persona>, I want <capability>, so that <business outcome>.”
+- (5) Replace vague/non-user persona with a plausible beneficiary.
+- (3) Reduce to ONE atomic capability; drop the rest.
+- (1) Remove mechanism (widget/colour/format/brand/placement); keep need.
+- (2) Move steps/implementation out of value; state a real outcome.
+- (6) Replace tautology/missing value with a concrete benefit (speed, reuse, decisions, fewer errors, convenience, compliance, safety).
+- (4) Reframe internal tech work to an end-user outcome where reasonable.
+- Do NOT invent new capabilities, brands, or technologies.
+
+NON-ZERO BIAS RULE
+- If uncertain between 0 and any non-zero class, choose the non-zero indicated by strongest signal and precedence.
+
+VALIDATION CHECKLIST (before emitting)
+- Exactly one class chosen per precedence.
+- Persona is specific (unless 5).
+- Capability = one action (unless 3 explains otherwise).
+- Value = outcome (unless 6).
+- No HOW remains in capability/value unless required by the class explanation.
+- Before emitting 6, confirm: not 3/5/4/1/2; and story fails Class 0 checks.
+
+FALLBACKS
+- No usable text field → classify as 6; corrected_us:
+  "As a user, I want to achieve my goal so that I obtain a useful outcome."
+- If parsing fails, classify using available cues (verbs, quantifiers, actor words).
+
+OUTPUT FORMAT (STRICT)
+- Output ONLY a JSON array, ordered by input order.
+- Each object fields in EXACT order:
+  "us_id" (number),
+  "estimated_problem_id" (number),
+  "corrected_us" (string),
+  "optional_explanation" (string)
+- No extra fields. No trailing commas. No prose outside the JSON.
+- Explanations: 1–2 sentences citing decisive signals (“multiple capabilities”, “vague persona”, “HOW in capability”, “steps in value”, “value repeats request”, “broad scope”).
+# 1 Conflate (HOW in capability)
+INPUT: {"us_id": 1, "text": "As a reader, I want a dropdown with autocomplete so that I can find articles quickly."}
+OUTPUT: {"us_id": 1, "estimated_problem_id": 1, "corrected_us": "As a reader, I want an efficient way to find articles so that I can access relevant content quickly.", "optional_explanation": "Capability prescribes specific UI controls (HOW); rewritten to express the need."}
+
+# 2 Misplaced (HOW in value)
+INPUT: {"us_id": 2, "text": "As a customer, I want to save my list so that I can print or email it to others."}
+OUTPUT: {"us_id": 2, "estimated_problem_id": 2, "corrected_us": "As a customer, I want to save my list so that I can reuse it when needed.", "optional_explanation": "Value lists operational steps; value should state an outcome."}
+
+# 3 Ultra-huge (multiple actions)
+INPUT: {"us_id": 3, "text": "As a customer, I want to save, copy, print, and email my list."}
+OUTPUT: {"us_id": 3, "estimated_problem_id": 3, "corrected_us": "As a customer, I want to save my list so that I can use it again later.", "optional_explanation": "Multiple capabilities in one story; reduced to one."}
+
+# 4 Technical (internal tech work)
+INPUT: {"us_id": 4, "text": "As a tester, I want detailed test plans so that I can validate the system."}
+OUTPUT: {"us_id": 4, "estimated_problem_id": 4, "corrected_us": "As a user, I want the product to be reliable so that I can complete tasks without issues.", "optional_explanation": "Technical persona and internal task; reframed to user-facing value."}
+
+# 5 Poor role (vague/non-user)
+INPUT: {"us_id": 5, "text": "As the system, I want to store customer profiles."}
+OUTPUT: {"us_id": 5, "estimated_problem_id": 5, "corrected_us": "As a returning customer, I want my profile saved so that I can check out faster.", "optional_explanation": "Non-user actor; replaced with a real persona and benefit."}
+
+# 6 Parakeet (value repeats)
+INPUT: {"us_id": 6, "text": "As a shopper, I want to find my orders so that I can see my orders."}
+OUTPUT: {"us_id": 6, "estimated_problem_id": 6, "corrected_us": "As a shopper, I want to find my past orders so that I can reorder favorites quickly.", "optional_explanation": "Value repeats the request; rewritten to a concrete benefit."}
+
+# 0 No Problem (clean)
+INPUT: {"us_id": 7, "text": "As a buyer, I want to save items to a wishlist so that I can compare options before purchasing."}
+OUTPUT: {"us_id": 7, "estimated_problem_id": 0, "corrected_us": "As a buyer, I want to save items to a wishlist so that I can compare options before purchasing.", "optional_explanation": "Specific persona, single capability, outcome-focused value."}
